@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-// import '../App.css';
+import '../css/Result.css';
 class Result extends Component {
     
     constructor(props) {
         super(props)
         this.state = {
-            result : "this is a test"
+            result : "this is the predicted result"
       }
     }
    predictResult = () => {
@@ -14,12 +14,18 @@ class Result extends Component {
   render() {
     return (
       <div className="TeamPick">
-        <button onClick={this.predictResult}>
-            Predict Match Result
-        </button>
-        <h1>
-            {this.state.result}
-        </h1>
+        <div className="button">
+            <button onClick={this.predictResult}>
+                Predict Match Result
+            </button>
+            <button onClick={this.props.resetTeamPick}>
+                Reset Team Picks
+            </button>
+            <h1>
+                {this.state.result}
+            </h1>
+        </div>
+        
       </div>
     );
   }
