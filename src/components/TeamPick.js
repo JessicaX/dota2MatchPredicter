@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import '../App.css';
+import '../css/TeamPick.css';
 class TeamPick extends Component {
   render() {
     let myTeamList = this.props.myTeamHeroes;
@@ -20,11 +20,11 @@ class TeamPick extends Component {
     <div className="TeamPick">
 
         <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <h4> My Team picks:</h4>
+            <h2> My Team picks:</h2>
             { myTeamnames }
         </div>
         <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <h4> Opponent Team picks:</h4>
+            <h2> Opponent Team picks:</h2>
             { opponentTeamNames }
         </div>
     

@@ -7,7 +7,7 @@ import HeroPicker from './components/HeroPikcer';
 
 var backgroundStyle = {
   width: "100%",
-  height: "1200px",
+  height: "1500px",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
@@ -17,11 +17,12 @@ var backgroundStyle = {
 class App extends Component {
   constructor(props) {
     super(props)
-
+    let passedRecommendedHeroes = ["abaddon.png", "ancient_apparition.png", "chen.png","clinkz.png"];
     this.state = {
         myTeamHeroes: [],
         opponentTeamHeroes: [],
-        round: 0
+        round: 0,
+        recommendedHeroes: passedRecommendedHeroes
     }
   }
 
@@ -29,9 +30,9 @@ class App extends Component {
     let curtRound = this.state.round + 1;
     let newMyTeamHeroes = this.state.myTeamHeroes;
     let newOpponentHeroes = this.state.opponentTeamHeroes;
-    if (newMyTeamHeroes.length < 5 && (curtRound == 1 || curtRound == 4 || curtRound == 5 || curtRound == 8 || curtRound == 9)) {
+    if (newMyTeamHeroes.length < 5 && (curtRound === 1 || curtRound === 4 || curtRound === 5 || curtRound === 8 || curtRound === 9)) {
       newMyTeamHeroes.push(dataFromHeroPicker.name);
-    } else if (newOpponentHeroes.length < 5 && (curtRound == 2 || curtRound == 3 || curtRound == 6 || curtRound == 7 || curtRound == 10)) {
+    } else if (newOpponentHeroes.length < 5 && (curtRound === 2 || curtRound === 3 || curtRound === 6 || curtRound === 7 || curtRound === 10)) {
       newOpponentHeroes.push(dataFromHeroPicker.name);
     }
     this.setState({myTeamHeroes : newMyTeamHeroes});
@@ -57,6 +58,7 @@ class App extends Component {
           <div className="HeroPicker">
             <HeroPicker 
               handleClickImage = {this.handleClickImage}
+              recommendedHeroes = {this.state.recommendedHeroes}
             ></HeroPicker>
           </div>
       </div>
