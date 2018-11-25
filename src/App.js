@@ -21,19 +21,25 @@ class App extends Component {
     this.state = {
         myTeamHeroes: [],
         opponentTeamHeroes: [],
-        round: 0,
+        round: 1,
         recommendedHeroes: passedRecommendedHeroes
     }
   }
 
   handleClickImage = (dataFromHeroPicker) => {
-    let curtRound = this.state.round + 1;
+    let curtRound = this.state.round;
     let newMyTeamHeroes = this.state.myTeamHeroes;
     let newOpponentHeroes = this.state.opponentTeamHeroes;
     if (newMyTeamHeroes.length < 5 && (curtRound === 1 || curtRound === 4 || curtRound === 5 || curtRound === 8 || curtRound === 9)) {
-      newMyTeamHeroes.push(dataFromHeroPicker.name);
+      if (!newOpponentHeroes.includes(dataFromHeroPicker.name) && !newMyTeamHeroes.includes(dataFromHeroPicker.name)) {
+        newMyTeamHeroes.push(dataFromHeroPicker.name);
+        curtRound+=1;
+      }
     } else if (newOpponentHeroes.length < 5 && (curtRound === 2 || curtRound === 3 || curtRound === 6 || curtRound === 7 || curtRound === 10)) {
-      newOpponentHeroes.push(dataFromHeroPicker.name);
+      if (!newOpponentHeroes.includes(dataFromHeroPicker.name) && !newMyTeamHeroes.includes(dataFromHeroPicker.name)) {
+        newOpponentHeroes.push(dataFromHeroPicker.name);
+        curtRound+=1;
+      }
     }
     this.setState({myTeamHeroes : newMyTeamHeroes});
     this.setState({opponentTeamHeroes : newOpponentHeroes});
@@ -45,6 +51,7 @@ class App extends Component {
     this.setState({opponentTeamHeroes: []});
     this.setState({round: 0})
   }
+  
 
   render() {
     return (
@@ -53,6 +60,8 @@ class App extends Component {
             <TeamPick myTeamHeroes={this.state.myTeamHeroes} opponentTeamHeroes={this.state.opponentTeamHeroes}></TeamPick>
             <Result 
               resetTeamPick = {this.resetTeamPick}
+              myTeamHeroes = {this.state.myTeamHeroes}
+              opponentTeamHeroes = {this.state.opponentTeamHeroes}
             ></Result>
           </div>
           <div className="HeroPicker">
