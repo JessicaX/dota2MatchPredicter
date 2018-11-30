@@ -6,7 +6,9 @@ class Result extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            result : ""
+            result : "",
+            tier: "unselected",
+            favoriteHero: "unselected"
       }
       this.predictResult = this.predictResult.bind(this);
       this.findId = this.findId.bind(this);
@@ -51,6 +53,7 @@ class Result extends Component {
     }
 
     async predictResult() {
+        // console.log(this.convertHeroNameToId("abad_do_+n"));
         var myTeamIds = [];
         var opponentTeamIds = [];
         console.log(this.props.myTeamHeroes)
@@ -78,7 +81,10 @@ class Result extends Component {
             body: JSON.stringify(
                 {
                     "myTeam": myTeamIds,
-                    "opponentTeam": opponentTeamIds
+                    "opponentTeam": opponentTeamIds,
+                    // "myTeam": [],
+                    // "opponentTeam": [],
+                    "tier": this.state.tier
                 }
             ) 
           }
@@ -89,27 +95,61 @@ class Result extends Component {
             // console.log(value.res);
             return value.res;
           });
-        console.log(resultString);
+        
+        console.log(resultString.toString().substr(0, 5));
         this.setState({
-            result: resultString
+            result: resultString.toString().substr(0, 5) + " %"
         })
         // console.log(rep);
         
    }
+
+   reset = () => {
+     this.setState({result: ""});
+     this.props.resetTeamPick();
+   }
+   tierhandleChange = (event) => {
+    this.setState({tier: event.target.value})
+    this.props.handleTierChange(event.target.value)
+   }
+   herohandleChange = (event) => {
+    this.setState({favoriteHero: event.target.value})
+    this.props.handlefavoriteHeroChange(event.target.value)
+   }
+   
   render() {
     return (
-      <div className="TeamPick">
-        <div className="button">
-            <button onClick={this.predictResult}>
-                Predict the Match Result
-            </button>
-            <button onClick={this.props.resetTeamPick}>
-                Reset Team Picks
-            </button>
-            <h1>
-                The propablity of win is : {this.state.result}
-            </h1>
+      <div className="Result">
+        <div className="information">
+            <h3>Enter game infomation for team match result prediction and hero recommendation:</h3>
+            <form>
+                <label>
+                    Player   tier:      
+                    <input type="text" onChange={this.tierhandleChange}/>
+                </label>
+            </form>
+            <form>
+                <label>
+                    Favorite hero:
+                    <input type="text" onChange={this.herohandleChange} />
+                </label>
+            </form>
+            <h4 className="info">Your selected player tier is: {this.state.tier}, favorite hero is: {this.state.favoriteHero}</h4>
         </div>
+        <div className="preditArea">
+            <div className="button">
+                <button onClick={this.predictResult}>
+                    Predict the Match Result
+                </button>
+                <button onClick={this.reset}>
+                    Reset Team Picks
+                </button>
+                <h1 className="info">
+                    The propablity of my team win is : {this.state.result}
+                </h1>
+            </div>
+        </div>
+        
         
       </div>
     );

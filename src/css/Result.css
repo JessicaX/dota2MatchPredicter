@@ -9,3 +9,12 @@ button {
     font-size: 16px;
     margin: 3px; 
 }
+
+.Result {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+
+.info {
+    color:yellowgreen;
+}
